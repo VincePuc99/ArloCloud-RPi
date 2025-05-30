@@ -88,15 +88,15 @@ sudo ./Arlo-Usb-Start.sh <max_power> <TelYes|TelNo> [api_token] [chat_id]
 ```
 Where <max_power> is:
 
-- `500` for Raspberry Pi 4
+- `500` for Raspberry Pi 4B
 - `200` for Raspberry Pi Zero 2
 - `100` for Raspberry Pi Zero
 
-Example for Raspberry Pi 4 with Telegram Sync Enabled:
+Example for Raspberry Pi 4B with Telegram Sync Enabled:
 ```
 sudo ./Arlo-Usb-Start.sh 500 TelYes 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11 -zzzzzzzzzz
 ```
-Example for Raspberry Pi 4 without Telegram Sync:
+Example for Raspberry Pi 4B without Telegram Sync (`TelNo` will automatically delete `telegram-sync.py`):
 ```
 sudo ./Arlo-Usb-Start.sh 500 TelNo
 ```
