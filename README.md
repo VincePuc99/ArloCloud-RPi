@@ -54,7 +54,7 @@ For using it just add `TelYes` during the first setup.
 
 If you choose `TelNo`, the `telegram-sync.py` file will be automatically deleted.
 
-#### Prerequisites for Telegram Sync
+**Prerequisites for Telegram Sync**
 
 - [➡️](https://www.python.org/downloads/) `Python3`
 - [➡️](https://python-telegram-bot.org/) `python-telegram-bot`
