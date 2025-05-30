@@ -41,6 +41,27 @@ Tested on:
 
 - For others RPi's:
   - Connect the USB cable to any USB port of the RPi, you will need an external power source.
+ 
+
+<details>
+  <summary><h3>Optional - Sync with Telegram Bot</h3></summary>
+
+For security reasons, I'm using it in polling mode. This may be inefficient, but it is strongly recommended to avoid opening any ports or exposing your public IP to the global internet. I will not develop a solution based on webhooks.
+
+This Python script `telegram-sync.py` monitors `/mnt/ArloExposed/arlo/` in recursive mode for new video files, calculate their hashes (for logging purpose), and sends them to your Telegram bot. It uses the bot's API token and the chat ID to send the videos.
+
+For using it just add `TelYes` during the first setup.
+
+If you choose `TelNo`, the `telegram-sync.py` file will be automatically deleted.
+
+#### Prerequisites for Telegram Sync
+
+- [➡️](https://www.python.org/downloads/) `Python3`
+- [➡️](https://python-telegram-bot.org/) `python-telegram-bot`
+- [➡️](https://core.telegram.org/bots#how-do-i-create-a-bot) `A Telegram bot with the API token` (created via BotFather)
+- [➡️](https://t.me/userinfobot) `The chat ID of the Telegram chat` where the videos will be sent.
+
+</details>
 
 ## Installation
 
@@ -59,23 +80,6 @@ cd ArloCloud-RPi
 ```sh
 sudo chmod +x *
 ```
-
-### Optional - Sync with Telegram Bot (python3)
-
-For security reasons, I'm using it in polling mode. This may be inefficient, but it is strongly recommended to avoid opening any ports or exposing your public IP to the global internet. I will not develop a solution based on webhooks.
-
-This Python script `telegram-sync.py` monitors `/mnt/ArloExposed/arlo/` in recursive mode for new video files, calculate their hashes (for logging purpose), and sends them to your Telegram bot. It uses the bot's API token and the chat ID to send the videos.
-
-For using it just add `TelYes` during the first setup.
-
-If you choose `TelNo`, the `telegram-sync.py` file will be automatically deleted.
-
-#### Prerequisites for Telegram Sync
-
-- [➡️](https://www.python.org/downloads/) `Python3`
-- [➡️](https://python-telegram-bot.org/) `python-telegram-bot`
-- [➡️](https://core.telegram.org/bots#how-do-i-create-a-bot) `A Telegram bot with the API token` (created via BotFather)
-- [➡️](https://t.me/userinfobot) `The chat ID of the Telegram chat` where the videos will be sent.
 
 ## Usage
 
@@ -98,7 +102,11 @@ sudo ./Arlo-Usb-Start.sh 500 TelNo
 ```
 
 After running `Arlo-Usb-Start.sh`, the Raspberry Pi will reboot.<br />
-Upon reboot, check the connection to the base in Arlo Secure App.
+
+Upon reboot, check the connection to the base in Arlo Secure App. It should look like the image below.
+
+<img height="200" src="https://github.com/user-attachments/assets/d2842741-3aa3-4ed1-bdf5-b9e80154231c" />
+
 
 ## Documentation
 
