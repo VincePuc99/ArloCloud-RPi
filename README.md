@@ -118,8 +118,9 @@ To completely uninstall all ArloCloud-RPi files or modifications, simply run the
 ```
 sudo ./uninstaller.sh
 ```
-This command will remove the USB image file, all mount point folders located in `/mnt`,<br />
-all files cloned with `git clone` and all crontab-related tasks.<br />
+This command will remove the USB image file, all mount point folders located in `/mnt`,all files cloned with `git clone`,<br />
+all crontab-related tasks, `dwc2` from `/etc/modules` `/boot/config.txt`<br />
+and eventually the Telegram service located in `/etc/systemd/system/telegram-sync.service`<br />
 
 Once the uninstaller has finished, the system will reboot.<br />
 Afterward, check the connection to the base in Arlo Secure App. It should look like the image below.
