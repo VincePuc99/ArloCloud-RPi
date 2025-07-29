@@ -93,7 +93,6 @@ echo
 echo "Removing all ArloCloud-RPi related files (including this uninstaller)..."
 
 if [ $(basename "$(pwd)") == "ArloCloud-RPi" ]; then
-    echo "Removing config files..."
     
     if rm -rf $(pwd); then
         echo "All config files removed successfully."
