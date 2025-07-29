@@ -133,7 +133,7 @@ Backup your data before proceeding!
 
 ## Documentation
 
-- `Arlo-Usb-Start.sh` - This script installs necessary dependencies and runs the other scripts in the correct order. It ensures that the system is properly set up for USB mass storage and clip management. | Main script to start the setup process.
+- `Arlo-Usb-Start.sh` - This script installs necessary dependencies and runs the other scripts in the correct order. It ensures that the system is properly set up for USB mass storage and clip management.
 
 - `cleanup_clips.sh` - Cleans up old clips from the storage directory. By default, it removes clips older than 14 days.
 
@@ -142,6 +142,8 @@ Backup your data before proceeding!
 - `sync_clips.sh` - Synchronizes clips from the USB storage to a shared directory. Ensures that the mount point is properly managed to avoid data corruption.
 
 - `arlo_usb_start.log` - Will be created on first run inside ArloUSB-AnyRP Main folder. Check it for any issue.
+
+- `./uninstaller.sh` - Uninstaller for remove every trace of ArloCloud-RPi.
 
 - `mp4_hashes.log` - (Optional) Logging file containing hashes of the videos, useful for telegram-sync.py.
 
