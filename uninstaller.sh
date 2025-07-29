@@ -84,8 +84,6 @@ else
     exit 1
 fi
 
-crontab -l
-
 echo
 echo "#############################################"
 echo
