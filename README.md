@@ -111,6 +111,24 @@ Upon reboot, check the connection to the base in Arlo Secure App. It should look
 
 <img height="200" src="https://github.com/user-attachments/assets/d2842741-3aa3-4ed1-bdf5-b9e80154231c" />
 
+## Uninstallation
+
+To completely uninstall all ArloCloud-RPi files or modifications, simply run the following command:
+
+```
+sudo ./uninstaller.sh
+```
+This command will remove the USB image file, all mount point folders located in `/mnt`,<br />
+all files cloned with `git clone` and all crontab-related tasks.<br />
+
+Once the uninstaller has finished, the system will reboot.<br />
+Afterward, check the connection to the base in Arlo Secure App. It should look like the image below.
+
+#### ⚠️ WARNING ⚠️
+Doing so will remove all clips saved in the ArloCloud-RPi mount points (like `/mnt/arlo` and `/mnt/ArloExposed`).<br />
+Backup your data before proceeding!
+
+<img height="200" src="https://github.com/user-attachments/assets/bd331990-24a9-488d-82bf-dba40d6eb6c5" />
 
 ## Documentation
 
