@@ -137,7 +137,7 @@ Backup your data before proceeding!
 
 - `cleanup_clips.sh` - Cleans up old clips from the storage directory. By default, it removes clips older than 14 days.
 
-- `enable_mass_storage.s` - Enables USB mass storage with the specified maximum power.
+- `enable_mass_storage.sh` - Enables USB mass storage with the specified maximum power.
 
 - `sync_clips.sh` - Synchronizes clips from the USB storage to a shared directory. Ensures that the mount point is properly managed to avoid data corruption.
 
