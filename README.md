@@ -18,11 +18,11 @@ If you just want an Arlo’s cloud storage DIY alternative then ArloCloud-RPi is
 
 The scripts handle tasks such as enabling mass storage (30GB), synchronizing clips, cleaning up old clips and optionally create a service for synchronizing clips with a Telegram Bot. <br />
 
-All clips are stored in `/mnt/ArloExposed`.<br />
+All clips are stored in `./ArloExposed` (inside the cloned ArloCloud-RPi).<br />
 You need to access to this folder to expose them on your preferred service (Google Drive - Samba - Telegram - etc).
 
 #### ⚠️ WARNING ⚠️
-Two folders will be created in `/mnt` - `/arlo` and `/ArloExposed`.<br />To avoid data corruption, DO NOT ALTER the `/arlo` one. It's a mount point for `sync_clips.sh`.<br />
+Two folders will be created in `/ArloCloud-RPi` - `./arlo` and `./ArloExposed`.<br />To avoid data corruption, DO NOT ALTER the `./arlo` one. It's a mount point for `sync_clips.sh`.<br />
 
 If using `Sync with Telegram Bot` double check your `[api_token]` & `[chat_id]`.<br />The program will not check them for you!<br />
 
@@ -52,7 +52,7 @@ Tested on:
 
 For security reasons, I'm using it in polling mode. This may be inefficient, but it is strongly recommended to avoid opening any ports or exposing your public IP to the global internet. I will not develop a solution based on webhooks.
 
-This Python script `telegram-sync.py` monitors `/mnt/ArloExposed/arlo/` in recursive mode for new video files, calculate their hashes (for logging purpose), and sends them to your Telegram bot. It uses the bot's API token and the chat ID to send the videos.
+This Python script `telegram-sync.py` monitors `./ArloExposed/arlo/` in recursive mode for new video files, calculate their hashes (for logging purpose), and sends them to your Telegram bot. It uses the bot's API token and the chat ID to send the videos.
 
 For using it just add `TelYes` during the first setup.
 
@@ -118,7 +118,7 @@ To completely uninstall all ArloCloud-RPi files or modifications, simply run the
 ```
 sudo ./uninstaller.sh
 ```
-This command will remove the USB image file, all mount point folders located in `/mnt`, <br />
+This command will remove the USB image file, all mount points located inside ArloCloud-RPi main folder, <br />
 all files cloned with `git clone`, all crontab-related tasks, `dwc2` from `/etc/modules`-`/boot/config.txt`<br />
 and eventually the Telegram service located in `/etc/systemd/system/telegram-sync.service`.<br />
 
