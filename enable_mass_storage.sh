@@ -10,7 +10,7 @@ max_power=$1
 usb_gadget="/sys/kernel/config/usb_gadget"  #Gadget DIR
 gadget="arlo"                               #Gadget Name
 gadget_root="$usb_gadget/$gadget"           #Gadget complete Path
-img_file="/arlo.bin"                        #IMG File Path
+img_file="$(pwd)/arlo.bin"                  #IMG File Path
 lang=0x409                                  #English Lang Code
 cfg=c                                       #Config Name
 
