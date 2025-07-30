@@ -56,13 +56,17 @@ echo
 echo "#############################################"
 echo
 
+ARLO_IMG_FILE="$(pwd)/arlo.bin" 
+ARLO_IMG_MOUNT_POINT="$(pwd)/arlo" 
+ARLO_EXPOSED_MOUNT_POINT="$(pwd)/ArloExposed" 
+
 echo "Removing ARLO image file and mount folders..."
 
-if mountpoint -q /mnt/arlo; then
-    sudo umount /mnt/arlo || { echo "Failed to unmount /mnt/arlo"; exit 1; }
+if mountpoint -q "$ARLO_IMG_MOUNT_POINT"; then
+    sudo umount "$ARLO_IMG_MOUNT_POINT" || { echo "Failed to unmount $ARLO_IMG_MOUNT_POINT"; exit 1; }
 fi
 
-if sudo rm -rf /mnt/arlo && rm -f /arlo.bin && sudo rm -rf /mnt/ArloExposed; then
+if sudo rm -rf "$ARLO_IMG_MOUNT_POINT" && rm -f "$ARLO_IMG_FILE" && sudo rm -rf "$ARLO_EXPOSED_MOUNT_POINT"; then
     echo "ARLO image and folders removed successfully."
 else
     echo "Failed to remove ARLO image or mount folders."
