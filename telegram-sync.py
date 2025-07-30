@@ -1,3 +1,11 @@
+import os
+import hashlib
+import asyncio
+import watchdog
+
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+
 from telegram.ext import Application, CallbackQueryHandler, CommandHandler, ContextTypes, MessageHandler, filters
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 
@@ -10,7 +18,8 @@ args = parser.parse_args()
 # Bot Init
 TOKEN = args.api_token
 CHATID = args.chat_id
-DIR = "/mnt/ArloExposed/arlo/"
+script_dir = os.path.dirname(os.path.realpath(__file__))
+DIR = os.path.join(script_dir, "ArloExposed/arlo/")
 
 ##################################################### DM
 
@@ -19,13 +28,6 @@ async def ignore_private_messages(update: Update, context: ContextTypes.DEFAULT_
         return
 
 ##################################################### Arlo
-import os
-import hashlib
-import asyncio
-import watchdog
-
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
 
 class VideoHandler(FileSystemEventHandler):
     def __init__(self, queue):
