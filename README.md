@@ -143,7 +143,7 @@ Backup your data before proceeding!
 
 - `arlo_usb_start.log` - Will be created on first run inside ArloUSB-AnyRP Main folder. Check it for any issue.
 
-- `./uninstaller.sh` - Uninstaller for remove every trace of ArloCloud-RPi.
+- `uninstaller.sh` - Uninstaller to remove every trace of ArloCloud-RPi.
 
 - `mp4_hashes.log` - (Optional) Logging file containing hashes of the videos, useful for telegram-sync.py.
 
