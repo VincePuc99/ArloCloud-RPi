@@ -2,7 +2,7 @@
 
 ################################################################# Logfile
 
-LOG_FILE="./arlo_usb_start.log"
+LOG_FILE="$(pwd)/arlo_usb_start.log"
 
 if [ -f "$LOG_FILE" ]; then
     > "$LOG_FILE"
@@ -113,7 +113,7 @@ echo "DWC2 SUCCESS - 4/6" >> "$LOG_FILE"
 
 ################################################################# Storage
 
-ARLO_IMG_FILE=/arlo.bin     # Define the ARLO image file and its size
+ARLO_IMG_FILE="$(pwd)/arlo.bin"     # Define the ARLO image file and its size
 ARLO_IMG_SIZE=31457280
 
 # Function to calculate the offset of the first partition in the image file
@@ -147,7 +147,7 @@ function add_drive () {
   loopdev=$(losetup -o "$partition_offset" -f --show "$filename")
   mkfs.vfat "$loopdev" -F 32 -n "$label" > /dev/null 2>&1
   losetup -d "$loopdev"
-  local mountpoint=/mnt/"$name"
+  local mountpoint="$(pwd)/$name"
   if [ ! -e "$mountpoint" ]
   then
     mkdir "$mountpoint"
