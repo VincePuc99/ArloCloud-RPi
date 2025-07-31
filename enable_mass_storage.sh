@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 if [ -z "$1" ]; then
     echo "Usage: $0 <max_power>"
     exit 1
@@ -10,7 +12,7 @@ max_power=$1
 usb_gadget="/sys/kernel/config/usb_gadget"  #Gadget DIR
 gadget="arlo"                               #Gadget Name
 gadget_root="$usb_gadget/$gadget"           #Gadget complete Path
-img_file="$(pwd)/arlo.bin"                  #IMG File Path
+img_file="$SCRIPT_DIR/arlo.bin"             #IMG File Path
 lang=0x409                                  #English Lang Code
 cfg=c                                       #Config Name
 
