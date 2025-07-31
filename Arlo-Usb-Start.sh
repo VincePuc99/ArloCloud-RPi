@@ -19,7 +19,7 @@ echo "LogFile SUCCESS - 1/7" >> "$LOG_FILE"
 if [ -z "$1" ] || ! [[ "$1" =~ ^[0-9]+$ ]] || [ "$1" -lt 100 ] || [ "$1" -gt 900 ]; then
     echo "Usage: $0 <max_power>"
     echo "Invalid max_power value. It must be a number between 100 and 900."
-    echo "MAXPOWER ERROR - 2/6" >> "$LOG_FILE"
+    echo "MAXPOWER ERROR - 2/7" >> "$LOG_FILE"
     exit 1
 fi
 
@@ -37,6 +37,8 @@ if [ "$FREE_SPACE_KB" -lt $((35 * 1024 * 1024)) ]; then
     exit 1
 fi
 
+echo "FREE_SPACE SUCCESS - 3/7" >> "$LOG_FILE"
+
 ################################################################# Dependencies
 
 is_installed() {
@@ -47,7 +49,7 @@ dependencies=(findutils rsync)
 
 for package in "${dependencies[@]}"; do
     if ! is_installed "$package"; then
-        echo "Dependencies ERROR: $package - 3/6">> "$LOG_FILE"
+        echo "Dependencies ERROR: $package - 4/7">> "$LOG_FILE"
         exit 1
     fi
 done
@@ -60,7 +62,7 @@ echo "Dependencies SUCCESS - 4/7">> "$LOG_FILE"
 if sudo sh -c 'echo "dwc2" >> /etc/modules'; then
     echo "Successfully appended 'dwc2' to /etc/modules" >> "$LOG_FILE"
 else
-    echo "Failed to append 'dwc2' to /etc/modules" >> "$LOG_FILE"
+    echo "dwc2 to /etc/modules ERROR - 5/7">> "$LOG_FILE"
     exit 1
 fi
 
@@ -68,7 +70,7 @@ fi
 if sudo sh -c 'echo "dtoverlay=dwc2" >> /boot/config.txt'; then
     echo "Successfully appended 'dtoverlay=dwc2' to /boot/config.txt" >> "$LOG_FILE"
 else
-    echo "Failed to append 'dtoverlay=dwc2' to /boot/config.txt" >> "$LOG_FILE"
+    echo "dtoverlay=dwc2 to /boot/config.txt ERROR - 5/7">> "$LOG_FILE"
     exit 1
 fi
 
@@ -128,13 +130,13 @@ sync_clip_interval="*/1 * * * * sudo /bin/bash $SCRIPT_DIR/sync_clips.sh"
 cleanup_clips_interval="0 0 * * * sudo /bin/bash $SCRIPT_DIR/cleanup_clips.sh"
 
 ( crontab -l 2>/dev/null | cat;  echo "$init_mass_storage" ) | crontab - \
-    || { echo "Failed to add init_mass_storage to crontab" >> "$LOG_FILE"; exit 1; }
+    || { echo "Failed to add init_mass_storage to crontab, 7/7 ERROR" >> "$LOG_FILE"; exit 1; }
 
 ( crontab -l 2>/dev/null | cat;  echo "$sync_clip_interval" ) | crontab - \
-    || { echo "Failed to add sync_clip_interval to crontab" >> "$LOG_FILE"; exit 1; }
+    || { echo "Failed to add sync_clip_interval to crontab, 7/7 ERROR" >> "$LOG_FILE"; exit 1; }
 
 ( crontab -l 2>/dev/null | cat;  echo "$cleanup_clips_interval" ) | crontab - \
-    || { echo "Failed to add cleanup_clips_interval to crontab" >> "$LOG_FILE"; exit 1; }
+    || { echo "Failed to add cleanup_clips_interval to crontab, 7/7 ERROR" >> "$LOG_FILE"; exit 1; }
 
 echo "Cronjob SUCCESS - 7/7" >> "$LOG_FILE"
 
