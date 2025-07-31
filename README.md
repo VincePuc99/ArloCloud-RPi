@@ -1,8 +1,6 @@
 # Arlo Self Hosted Cloud-RPi Setup
 
 ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white)
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 ![Debian](https://img.shields.io/badge/Debian-D70A53?style=for-the-badge&logo=debian&logoColor=white)
 ![Raspberry Pi](https://img.shields.io/badge/-RaspberryPi-C51A4A?style=for-the-badge&logo=Raspberry-Pi)
@@ -119,10 +117,9 @@ Backup your data before proceeding!
 
 ### Dependencies
 The scripts require the following packages:<br />
-`git` - `findutils` - `util-linux` - `rsync` - `grep` - `coreutils` - `procps` - `kmod`
+`git` - `findutils` - `rsync`
 
 The Arlo-Usb-Start.sh script will automatically check these dependencies.<br />
-
 If they are not already installed the program will exit resulting in an error in LogFile.
 
 ## License
