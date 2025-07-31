@@ -10,12 +10,11 @@
 This setup lets you store every videos on your own Raspberry Pi. All you need is a Pi and an SD card. <br />
 
 Once set up, your Pi connects directly to the Arlo base station, so you can access and store all your footage locally. <br />
-Then you can share all your footage with your preferred method, Google Drive, Samba, One Drive, virtually everything that can show videos! <br />
+Then you can share all your footage with your preferred method, Google Drive, Samba, Plex, virtually everything that can show videos! <br />
 
 If you just want an Arlo’s cloud storage DIY alternative then ArloCloud-RPi is for you! <br />
 
 The scripts handle tasks such as enabling mass storage (30GB), synchronizing clips and cleaning up old clips. <br />
-
 All clips are stored in `./ArloExposed` (inside the cloned ArloCloud-RPi).<br />
 You need to access to this folder to expose them on your preferred service.
 
@@ -84,7 +83,7 @@ Upon reboot, check the connection to the base in Arlo Secure App. It should look
 
 ## Uninstallation
 
-To completely uninstall all ArloCloud-RPi, run the following command:
+To completely uninstall ArloCloud-RPi, run the following command:
 
 ```
 sudo ./uninstaller.sh
