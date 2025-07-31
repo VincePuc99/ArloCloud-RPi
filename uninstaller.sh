@@ -1,28 +1,9 @@
 #!/bin/bash
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 echo "#############################################"
 echo "#### ArloCloud-RPi All-in-one uninstaller ###"
-echo "#############################################"
-echo
-
-echo "Checking if the telegram-sync.service exists..."
-if systemctl list-units --full --all | grep -q "telegram-sync.service"; then
-    echo "Systemd service found. Proceeding to disable and remove..."
-
-    if sudo systemctl stop telegram-sync.service && \
-       sudo systemctl disable telegram-sync.service && \
-       sudo rm -f /etc/systemd/system/telegram-sync.service && \
-       sudo systemctl daemon-reload; then
-        echo "Systemd service removed successfully."
-    else
-        echo "Failed to remove systemd service."
-        exit 1
-    fi
-else
-    echo "Systemd service not found. Skipping removal..."
-fi
-
-echo
 echo "#############################################"
 echo
 
@@ -56,9 +37,9 @@ echo
 echo "#############################################"
 echo
 
-ARLO_IMG_FILE="$(pwd)/arlo.bin" 
-ARLO_IMG_MOUNT_POINT="$(pwd)/arlo" 
-ARLO_EXPOSED_MOUNT_POINT="$(pwd)/ArloExposed" 
+ARLO_IMG_FILE="$SCRIPT_DIR/arlo.bin" 
+ARLO_IMG_MOUNT_POINT="$SCRIPT_DIR/arlo" 
+ARLO_EXPOSED_MOUNT_POINT="$SCRIPT_DIR/ArloExposed" 
 
 echo "Removing ARLO image file and mount folders..."
 
@@ -79,9 +60,9 @@ echo
 
 echo "Checking if cron jobs exist..."
 
-if crontab -l | grep -vE "@reboot sudo sh $(pwd)/enable_mass_storage.sh [0-9]+" | crontab - && \
-   crontab -l | grep -vE "\\*/1 \\* \\* \\* \\* sudo /bin/bash $(pwd)/sync_clips.sh" | crontab - && \
-   crontab -l | grep -vE "0 0 \\* \\* \\* sudo /bin/bash $(pwd)/cleanup_clips.sh" | crontab - ; then
+if crontab -l | grep -vE "@reboot sudo sh $SCRIPT_DIR/enable_mass_storage.sh [0-9]+" | crontab - && \
+   crontab -l | grep -vE "\\*/1 \\* \\* \\* \\* sudo /bin/bash $SCRIPT_DIR/sync_clips.sh" | crontab - && \
+   crontab -l | grep -vE "0 0 \\* \\* \\* sudo /bin/bash $SCRIPT_DIR/cleanup_clips.sh" | crontab - ; then
     echo "All cron jobs found and removed."
 else
     echo "One or more cron jobs not found. Skipping removal."
@@ -94,9 +75,9 @@ echo
 
 echo "Removing all ArloCloud-RPi related files (including this uninstaller)..."
 
-if [ $(basename "$(pwd)") == "ArloCloud-RPi" ]; then
+if [ $(basename "$SCRIPT_DIR") == "ArloCloud-RPi" ]; then
     
-    if rm -rf $(pwd); then
+    if rm -rf $SCRIPT_DIR; then
         echo "All config files removed successfully."
     else
         echo "Failed to remove config files."
