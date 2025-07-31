@@ -127,16 +127,12 @@ echo "Storage IMG SUCCESS - 6/7" >> "$LOG_FILE"
 
 init_mass_storage="@reboot sudo sh $SCRIPT_DIR/enable_mass_storage.sh $MAX_POWER"
 sync_clip_interval="*/1 * * * * sudo /bin/bash $SCRIPT_DIR/sync_clips.sh"
-cleanup_clips_interval="0 0 * * * sudo /bin/bash $SCRIPT_DIR/cleanup_clips.sh"
 
 ( crontab -l 2>/dev/null | cat;  echo "$init_mass_storage" ) | crontab - \
     || { echo "Failed to add init_mass_storage to crontab, 7/7 ERROR" >> "$LOG_FILE"; exit 1; }
 
 ( crontab -l 2>/dev/null | cat;  echo "$sync_clip_interval" ) | crontab - \
     || { echo "Failed to add sync_clip_interval to crontab, 7/7 ERROR" >> "$LOG_FILE"; exit 1; }
-
-( crontab -l 2>/dev/null | cat;  echo "$cleanup_clips_interval" ) | crontab - \
-    || { echo "Failed to add cleanup_clips_interval to crontab, 7/7 ERROR" >> "$LOG_FILE"; exit 1; }
 
 echo "Cronjob SUCCESS - 7/7" >> "$LOG_FILE"
 
