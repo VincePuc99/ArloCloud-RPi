@@ -12,7 +12,17 @@ else
     touch "$LOG_FILE"
 fi
 
-echo "LogFile SUCCESS - 1/6" >> "$LOG_FILE"
+echo "LogFile SUCCESS - 1/7" >> "$LOG_FILE"
+
+################################################################# Free Space check
+
+FREE_SPACE_KB=$(df / | tail -1 | awk '{print $4}')
+
+if [ "$FREE_SPACE_KB" -lt $((35 * 1024 * 1024)) ]; then
+    echo "Error: Less than 35 GB available."
+    echo "FREE_SPACE ERROR - 2/7" >> "$LOG_FILE"
+    exit 1
+fi
 
 ################################################################# MAX_POWER Control
 
@@ -23,7 +33,7 @@ if [ -z "$1" ] || ! [[ "$1" =~ ^[0-9]+$ ]] || [ "$1" -lt 100 ] || [ "$1" -gt 900
     exit 1
 fi
 
-echo "MaxPower SUCCESS - 2/6" >> "$LOG_FILE"
+echo "MaxPower SUCCESS - 3/7" >> "$LOG_FILE"
 
 MAX_POWER=$1
 
@@ -42,7 +52,7 @@ for package in "${dependencies[@]}"; do
     fi
 done
 
-echo "Dependencies SUCCESS - 3/6">> "$LOG_FILE"
+echo "Dependencies SUCCESS - 4/7">> "$LOG_FILE"
 
 ################################################################# DWC2
 
@@ -62,7 +72,7 @@ else
     exit 1
 fi
 
-echo "DWC2 SUCCESS - 4/6" >> "$LOG_FILE"
+echo "DWC2 SUCCESS - 5/7" >> "$LOG_FILE"
 
 ################################################################# Storage
 
@@ -109,7 +119,7 @@ function add_drive () {
 
 add_drive "arlo" "ARLO" "$ARLO_IMG_SIZE" "$ARLO_IMG_FILE" 
 
-echo "Storage IMG SUCCESS - 5/6" >> "$LOG_FILE"
+echo "Storage IMG SUCCESS - 6/7" >> "$LOG_FILE"
 
 ################################################################# Cronjob
 
@@ -126,7 +136,7 @@ cleanup_clips_interval="0 0 * * * sudo /bin/bash $SCRIPT_DIR/cleanup_clips.sh"
 ( crontab -l 2>/dev/null | cat;  echo "$cleanup_clips_interval" ) | crontab - \
     || { echo "Failed to add cleanup_clips_interval to crontab" >> "$LOG_FILE"; exit 1; }
 
-echo "Cronjob SUCCESS - 6/6" >> "$LOG_FILE"
+echo "Cronjob SUCCESS - 7/7" >> "$LOG_FILE"
 
 #################################################################
 
