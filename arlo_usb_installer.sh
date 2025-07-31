@@ -4,7 +4,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 ################################################################# Logfile
 
-LOG_FILE="$SCRIPT_DIR/arlo_usb_start.log"
+LOG_FILE="$SCRIPT_DIR/arlo_usb_installer.log"
 
 if [ -f "$LOG_FILE" ]; then
     > "$LOG_FILE"
