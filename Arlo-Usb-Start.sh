@@ -1,8 +1,10 @@
 #!/bin/bash
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 ################################################################# Logfile
 
-LOG_FILE="$(pwd)/arlo_usb_start.log"
+LOG_FILE="$SCRIPT_DIR/arlo_usb_start.log"
 
 if [ -f "$LOG_FILE" ]; then
     > "$LOG_FILE"
@@ -62,7 +64,7 @@ echo "DWC2 SUCCESS - 4/6" >> "$LOG_FILE"
 
 ################################################################# Storage
 
-ARLO_IMG_FILE="$(pwd)/arlo.bin"     # Define the ARLO image file and its size
+ARLO_IMG_FILE="$SCRIPT_DIR/arlo.bin"     # Define the ARLO image file and its size
 ARLO_IMG_SIZE=31457280
 
 # Function to calculate the offset of the first partition in the image file
@@ -96,7 +98,7 @@ function add_drive () {
   loopdev=$(losetup -o "$partition_offset" -f --show "$filename")
   mkfs.vfat "$loopdev" -F 32 -n "$label" > /dev/null 2>&1
   losetup -d "$loopdev"
-  local mountpoint="$(pwd)/$name"
+  local mountpoint="$SCRIPT_DIR/$name"
   if [ ! -e "$mountpoint" ]
   then
     mkdir "$mountpoint"
@@ -109,9 +111,9 @@ echo "Storage IMG SUCCESS - 5/6" >> "$LOG_FILE"
 
 ################################################################# Cronjob
 
-init_mass_storage="@reboot sudo sh $(pwd)/enable_mass_storage.sh $MAX_POWER"
-sync_clip_interval="*/1 * * * * sudo /bin/bash $(pwd)/sync_clips.sh"
-cleanup_clips_interval="0 0 * * * sudo /bin/bash $(pwd)/cleanup_clips.sh"
+init_mass_storage="@reboot sudo sh $SCRIPT_DIR/enable_mass_storage.sh $MAX_POWER"
+sync_clip_interval="*/1 * * * * sudo /bin/bash $SCRIPT_DIR/sync_clips.sh"
+cleanup_clips_interval="0 0 * * * sudo /bin/bash $SCRIPT_DIR/cleanup_clips.sh"
 
 ( crontab -l 2>/dev/null | cat;  echo "$init_mass_storage" ) | crontab - \
     || { echo "Failed to add init_mass_storage to crontab" >> "$LOG_FILE"; exit 1; }
