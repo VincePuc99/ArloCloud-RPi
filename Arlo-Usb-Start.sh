@@ -78,7 +78,7 @@ echo "DWC2 SUCCESS - 5/7" >> "$LOG_FILE"
 
 ################################################################# Storage
 
-ARLO_IMG_FILE="./arlo.bin"     # Define the ARLO image file and its size
+ARLO_IMG_FILE="/arlo.bin"     # Define the ARLO image file and its size
 ARLO_IMG_SIZE=31457280
 
 # Function to calculate the offset of the first partition in the image file
