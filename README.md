@@ -12,19 +12,17 @@
 This setup lets you store every videos on your own Raspberry Pi. All you need is a Pi and an SD card. <br />
 
 Once set up, your Pi connects directly to the Arlo base station, so you can access and store all your footage locally. <br />
-Then you can share all your footage with your preferred method, i'm using Telegram but it's up to you, Google Drive, Samba, One Drive, virtually everything that can show videos! <br />
+Then you can share all your footage with your preferred method, Google Drive, Samba, One Drive, virtually everything that can show videos! <br />
 
 If you just want an Arlo’s cloud storage DIY alternative then ArloCloud-RPi is for you! <br />
 
-The scripts handle tasks such as enabling mass storage (30GB), synchronizing clips, cleaning up old clips and optionally create a service for synchronizing clips with a Telegram Bot. <br />
+The scripts handle tasks such as enabling mass storage (30GB), synchronizing clips and cleaning up old clips. <br />
 
 All clips are stored in `./ArloExposed` (inside the cloned ArloCloud-RPi).<br />
-You need to access to this folder to expose them on your preferred service (Google Drive - Samba - Telegram - etc).
+You need to access to this folder to expose them on your preferred service.
 
 #### ⚠️ WARNING ⚠️
 Two folders will be created in `/ArloCloud-RPi` - `./arlo` and `./ArloExposed`.<br />To avoid data corruption, DO NOT ALTER the `./arlo` one. It's a mount point for `sync_clips.sh`.<br />
-
-If using `Sync with Telegram Bot` double check your `[api_token]` & `[chat_id]`.<br />The program will not check them for you!<br />
 
 Any other OS's / Distros are untested mainly due to `/boot/config.txt` position.
 
@@ -46,27 +44,6 @@ Tested on:
 - For others RPi's:
   - Connect the USB cable to any USB port of the RPi, you will need an external power source.
  
-
-<details>
-  <summary><h3>Optional - Sync with Telegram Bot</h3></summary>
-
-For security reasons, I'm using it in polling mode. This may be inefficient, but it is strongly recommended to avoid opening any ports or exposing your public IP to the global internet. I will not develop a solution based on webhooks.
-
-This Python script `telegram-sync.py` monitors `./ArloExposed/arlo/` in recursive mode for new video files, calculate their hashes (for logging purpose), and sends them to your Telegram bot. It uses the bot's API token and the chat ID to send the videos.
-
-For using it just add `TelYes` during the first setup.
-
-If you choose `TelNo`, the `telegram-sync.py` file will be automatically deleted.
-
-**Prerequisites for Telegram Sync**
-
-- [➡️](https://www.python.org/downloads/) `Python3`
-- [➡️](https://python-telegram-bot.org/) `python-telegram-bot`
-- [➡️](https://core.telegram.org/bots#how-do-i-create-a-bot) `A Telegram bot with the API token` (created via BotFather)
-- [➡️](https://t.me/userinfobot) `The chat ID of the Telegram chat` where the videos will be sent.
-
-</details>
-
 ## Installation
 
 ### Cloning the Repository
@@ -88,7 +65,7 @@ sudo chmod +x *
 ## Usage
 
 ```sh
-sudo ./Arlo-Usb-Start.sh <max_power> <TelYes|TelNo> [api_token] [chat_id]
+sudo ./Arlo-Usb-Start.sh <max_power>
 ```
 Where <max_power> is:
 
@@ -96,13 +73,9 @@ Where <max_power> is:
 - `200` for Raspberry Pi Zero 2
 - `100` for Raspberry Pi Zero
 
-Example for Raspberry Pi 4B with Telegram Sync Enabled:
+Example for Raspberry Pi 4B:
 ```
-sudo ./Arlo-Usb-Start.sh 500 TelYes 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11 -zzzzzzzzzz
-```
-Example for Raspberry Pi 4B without Telegram Sync (`TelNo` will automatically delete `telegram-sync.py`):
-```
-sudo ./Arlo-Usb-Start.sh 500 TelNo
+sudo ./Arlo-Usb-Start.sh 500
 ```
 
 After running `Arlo-Usb-Start.sh`, the Raspberry Pi will reboot.<br />
@@ -113,14 +86,13 @@ Upon reboot, check the connection to the base in Arlo Secure App. It should look
 
 ## Uninstallation
 
-To completely uninstall all ArloCloud-RPi files or modifications, simply run the following command:
+To completely uninstall all ArloCloud-RPi, run the following command:
 
 ```
 sudo ./uninstaller.sh
 ```
 This command will remove the USB image file, all mount points located inside ArloCloud-RPi main folder, <br />
-all files cloned with `git clone`, all crontab-related tasks, `dwc2` from `/etc/modules`-`/boot/config.txt`<br />
-and eventually the Telegram service located in `/etc/systemd/system/telegram-sync.service`.<br />
+all files cloned with `git clone`, all crontab-related tasks and `dwc2` from `/etc/modules`-`/boot/config.txt`.<br />
 
 Once the uninstaller has finished, the system will reboot.<br />
 Afterward, check the connection to the base in Arlo Secure App. It should look like the image below.
@@ -145,18 +117,13 @@ Backup your data before proceeding!
 
 - `uninstaller.sh` - Uninstaller to remove every trace of ArloCloud-RPi.
 
-- `mp4_hashes.log` - (Optional) Logging file containing hashes of the videos, useful for telegram-sync.py.
-
-- `telegram-sync.py` - (Optional) File service for synchronizing clips from the USB storage to a Telegram Bot.
-
 ### Dependencies
 The scripts require the following packages:<br />
-`git` - `bash` - `findutils` - `util-linux` - `rsync` - `grep` - `coreutils` - `procps` - `kmod`
+`git` - `findutils` - `util-linux` - `rsync` - `grep` - `coreutils` - `procps` - `kmod`
 
-The optional Telegram Sync script require the following packages:<br />
-`python3` - `python-telegram-bot`
+The Arlo-Usb-Start.sh script will automatically check these dependencies.<br />
 
-The Arlo-Usb-Start.sh script will automatically check these dependencies.<br />If they are not already installed the program will exit resulting in an error in LogFile.
+If they are not already installed the program will exit resulting in an error in LogFile.
 
 ## License
 This project is licensed under the MIT License.
