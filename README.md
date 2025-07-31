@@ -15,7 +15,7 @@ Then you can share all your footage with your preferred method, Google Drive, Sa
 If you just want an Arlo’s cloud storage DIY alternative then ArloCloud-RPi is for you! <br />
 
 The script enables a virtual USB storage of 30GB and sets up a crontab to synchronize clips between<br /> the virtual USB and an exposed folder (`./ArloExposed` inside the cloned `/ArloCloud-RPi`).<br />
-You need to access this folder to view your clips on your preferred service.
+You need to access this folder in order to view your clips on your preferred service.
 
 #### ⚠️ WARNING ⚠️
 Two directories will be created in `/ArloCloud-RPi` - `./arlo` and `./ArloExposed`.<br />
