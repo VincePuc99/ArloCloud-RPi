@@ -21,6 +21,8 @@ else
     echo "'dwc2' not found in /etc/modules. Skipping removal."
 fi
 
+echo
+
 if grep -q "dtoverlay=dwc2" /boot/config.txt; then
     echo "'dtoverlay=dwc2' found in /boot/config.txt. Proceeding to remove..."
     if sudo sed -i '/dtoverlay=dwc2/d' /boot/config.txt; then
