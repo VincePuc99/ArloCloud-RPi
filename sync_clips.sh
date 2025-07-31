@@ -30,7 +30,7 @@ function first_partition_offset () {
 
 ARLO_IMG_FILE="$(pwd)/arlo.bin" 
 ARLO_IMG_MOUNT_POINT="$(pwd)/arlo" 
-ARLO_EXPOSED_MOUNT_POINT="$(pwd)/ArloExposed" 
+ARLO_EXPOSED_MOUNT_POINT="$(dirname "$0")/ArloExposed" 
 
 umount "$ARLO_IMG_MOUNT_POINT" || true 
 
