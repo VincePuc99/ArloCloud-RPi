@@ -63,9 +63,8 @@ echo
 echo "Checking if cron jobs exist..."
 
 if crontab -l | grep -vE "@reboot sudo sh $SCRIPT_DIR/enable_mass_storage.sh [0-9]+" | crontab - && \
-   crontab -l | grep -vE "\\*/1 \\* \\* \\* \\* sudo /bin/bash $SCRIPT_DIR/sync_clips.sh" | crontab - && \
-   crontab -l | grep -vE "0 0 \\* \\* \\* sudo /bin/bash $SCRIPT_DIR/cleanup_clips.sh" | crontab - ; then
-    echo "All cron jobs found and removed."
+   crontab -l | grep -vE "\\*/1 \\* \\* \\* \\* sudo /bin/bash $SCRIPT_DIR/sync_clips.sh" | crontab - ; then
+   echo "All cron jobs found and removed."
 else
     echo "One or more cron jobs not found. Skipping removal."
     exit 1
