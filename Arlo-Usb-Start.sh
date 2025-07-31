@@ -14,16 +14,6 @@ fi
 
 echo "LogFile SUCCESS - 1/7" >> "$LOG_FILE"
 
-################################################################# Free Space check
-
-FREE_SPACE_KB=$(df / | tail -1 | awk '{print $4}')
-
-if [ "$FREE_SPACE_KB" -lt $((35 * 1024 * 1024)) ]; then
-    echo "Error: Less than 35 GB available."
-    echo "FREE_SPACE ERROR - 2/7" >> "$LOG_FILE"
-    exit 1
-fi
-
 ################################################################# MAX_POWER Control
 
 if [ -z "$1" ] || ! [[ "$1" =~ ^[0-9]+$ ]] || [ "$1" -lt 100 ] || [ "$1" -gt 900 ]; then
@@ -33,9 +23,19 @@ if [ -z "$1" ] || ! [[ "$1" =~ ^[0-9]+$ ]] || [ "$1" -lt 100 ] || [ "$1" -gt 900
     exit 1
 fi
 
-echo "MaxPower SUCCESS - 3/7" >> "$LOG_FILE"
+echo "MaxPower SUCCESS - 2/7" >> "$LOG_FILE"
 
 MAX_POWER=$1
+
+################################################################# Free Space check
+
+FREE_SPACE_KB=$(df / | tail -1 | awk '{print $4}')
+
+if [ "$FREE_SPACE_KB" -lt $((35 * 1024 * 1024)) ]; then
+    echo "Error: Less than 35 GB available."
+    echo "FREE_SPACE ERROR - 3/7" >> "$LOG_FILE"
+    exit 1
+fi
 
 ################################################################# Dependencies
 
