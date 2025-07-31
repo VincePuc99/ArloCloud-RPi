@@ -83,7 +83,7 @@ Upon reboot, check the connection to the base in Arlo Secure App. It should look
 
 ## Uninstallation
 
-To completely uninstall ArloCloud-RPi, run the following command:
+To completely uninstall `ArloCloud-RPi`, run the following command:
 
 ```
 sudo ./uninstaller.sh
