@@ -1,30 +1,25 @@
 # Arlo Self Hosted Cloud-RPi Setup
 
 ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white)
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)
-![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
-![Debian](https://img.shields.io/badge/Debian-D70A53?style=for-the-badge&logo=debian&logoColor=white)
 ![Raspberry Pi](https://img.shields.io/badge/-RaspberryPi-C51A4A?style=for-the-badge&logo=Raspberry-Pi)
+![Debian](https://img.shields.io/badge/Debian-D70A53?style=for-the-badge&logo=debian&logoColor=white)
+![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 
 ### Instead of relying on Arlo's cloud service, you can use a Raspberry Pi to store your videos locally and access them virtually everywhere!<br />
 
 This setup lets you store every videos on your own Raspberry Pi. All you need is a Pi and an SD card. <br />
 
 Once set up, your Pi connects directly to the Arlo base station, so you can access and store all your footage locally. <br />
-Then you can share all your footage with your preferred method, i'm using Telegram but it's up to you, Google Drive, Samba, One Drive, virtually everything that can show videos! <br />
+Then you can share all your footage with your preferred method, Google Drive, Samba, Plex, virtually everything that can show videos! <br />
 
 If you just want an Arlo’s cloud storage DIY alternative then ArloCloud-RPi is for you! <br />
 
-The scripts handle tasks such as enabling mass storage (30GB), synchronizing clips, cleaning up old clips and optionally create a service for synchronizing clips with a Telegram Bot. <br />
-
-All clips are stored in `/mnt/ArloExposed`.<br />
-You need to access to this folder to expose them on your preferred service (Google Drive - Samba - Telegram - etc).
+The script enables a virtual USB storage of 30GB and sets up a crontab to synchronize clips between<br /> the virtual USB and an exposed folder (`./ArloExposed` inside the cloned `/ArloCloud-RPi`).<br />
+You need to access this folder in order to view your clips on your preferred service.
 
 #### ⚠️ WARNING ⚠️
-Two folders will be created in `/mnt` - `/arlo` and `/ArloExposed`.<br />To avoid data corruption, DO NOT ALTER the `/arlo` one. It's a mount point for `sync_clips.sh`.<br />
-
-If using `Sync with Telegram Bot` double check your `[api_token]` & `[chat_id]`.<br />The program will not check them for you!<br />
+Two directories will be created in `/ArloCloud-RPi` - `./arlo` and `./ArloExposed`.<br />
+To avoid data corruption, DO NOT ALTER the `./arlo` one. It's a mount point for `sync_clips.sh`.<br />
 
 Any other OS's / Distros are untested mainly due to `/boot/config.txt` position.
 
@@ -46,27 +41,6 @@ Tested on:
 - For others RPi's:
   - Connect the USB cable to any USB port of the RPi, you will need an external power source.
  
-
-<details>
-  <summary><h3>Optional - Sync with Telegram Bot</h3></summary>
-
-For security reasons, I'm using it in polling mode. This may be inefficient, but it is strongly recommended to avoid opening any ports or exposing your public IP to the global internet. I will not develop a solution based on webhooks.
-
-This Python script `telegram-sync.py` monitors `/mnt/ArloExposed/arlo/` in recursive mode for new video files, calculate their hashes (for logging purpose), and sends them to your Telegram bot. It uses the bot's API token and the chat ID to send the videos.
-
-For using it just add `TelYes` during the first setup.
-
-If you choose `TelNo`, the `telegram-sync.py` file will be automatically deleted.
-
-**Prerequisites for Telegram Sync**
-
-- [➡️](https://www.python.org/downloads/) `Python3`
-- [➡️](https://python-telegram-bot.org/) `python-telegram-bot`
-- [➡️](https://core.telegram.org/bots#how-do-i-create-a-bot) `A Telegram bot with the API token` (created via BotFather)
-- [➡️](https://t.me/userinfobot) `The chat ID of the Telegram chat` where the videos will be sent.
-
-</details>
-
 ## Installation
 
 ### Cloning the Repository
@@ -88,7 +62,7 @@ sudo chmod +x *
 ## Usage
 
 ```sh
-sudo ./Arlo-Usb-Start.sh <max_power> <TelYes|TelNo> [api_token] [chat_id]
+sudo ./arlo_usb_installer.sh <max_power>
 ```
 Where <max_power> is:
 
@@ -96,67 +70,54 @@ Where <max_power> is:
 - `200` for Raspberry Pi Zero 2
 - `100` for Raspberry Pi Zero
 
-Example for Raspberry Pi 4B with Telegram Sync Enabled:
+Example for Raspberry Pi 4B:
 ```
-sudo ./Arlo-Usb-Start.sh 500 TelYes 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11 -zzzzzzzzzz
-```
-Example for Raspberry Pi 4B without Telegram Sync (`TelNo` will automatically delete `telegram-sync.py`):
-```
-sudo ./Arlo-Usb-Start.sh 500 TelNo
+sudo ./arlo_usb_installer.sh 500
 ```
 
-After running `Arlo-Usb-Start.sh`, the Raspberry Pi will reboot.<br />
+After running `arlo_usb_installer.sh`, the Raspberry Pi will reboot.<br />
 
-Upon reboot, check the connection to the base in Arlo Secure App. It should look like the image below.
+Upon reboot, check the connection to the base in Arlo Secure App™. It should look like the image below.
 
 <img height="200" src="https://github.com/user-attachments/assets/d2842741-3aa3-4ed1-bdf5-b9e80154231c" />
 
 ## Uninstallation
 
-To completely uninstall all ArloCloud-RPi files or modifications, simply run the following command:
+To completely uninstall `ArloCloud-RPi`, run the following command:
 
 ```
 sudo ./uninstaller.sh
 ```
-This command will remove the USB image file, all mount point folders located in `/mnt`, <br />
-all files cloned with `git clone`, all crontab-related tasks, `dwc2` from `/etc/modules`-`/boot/config.txt`<br />
-and eventually the Telegram service located in `/etc/systemd/system/telegram-sync.service`.<br />
+This command will remove the USB image file, all mount points located inside `/ArloCloud-RPi` main folder, <br />
+all files cloned with `git clone`, all crontab-related tasks and `dwc2` from `/etc/modules`-`/boot/config.txt`.<br />
 
 Once the uninstaller has finished, the system will reboot.<br />
-Afterward, check the connection to the base in Arlo Secure App. It should look like the image below.
+Afterward, check the connection to the base in Arlo Secure App™. It should look like the image below.
 
 #### ⚠️ WARNING ⚠️
-Doing so will remove all clips saved in the ArloCloud-RPi mount points (like `/mnt/arlo` and `/mnt/ArloExposed`).<br />
+All saved clip in the `/ArloCloud-RPi` mount points (like `./arlo` and `./ArloExposed`) will be removed.<br />
 Backup your data before proceeding!
 
 <img height="200" src="https://github.com/user-attachments/assets/bd331990-24a9-488d-82bf-dba40d6eb6c5" />
 
 ## Documentation
 
-- `Arlo-Usb-Start.sh` - This script installs necessary dependencies and runs the other scripts in the correct order. It ensures that the system is properly set up for USB mass storage and clip management.
+- `arlo_usb_installer.sh` - This script installs necessary dependencies and runs the other scripts in the correct order. It ensures that the system is properly set up for USB mass storage and clip management.
 
-- `cleanup_clips.sh` - Cleans up old clips from the storage directory. By default, it removes clips older than 14 days.
-
-- `enable_mass_storage.s` - Enables USB mass storage with the specified maximum power.
+- `enable_mass_storage.sh` - Enables USB mass storage with the specified maximum power.
 
 - `sync_clips.sh` - Synchronizes clips from the USB storage to a shared directory. Ensures that the mount point is properly managed to avoid data corruption.
 
-- `arlo_usb_start.log` - Will be created on first run inside ArloUSB-AnyRP Main folder. Check it for any issue.
+- `arlo_usb_installer.log` - Will be created on first run inside ArloCloud-RPi Main folder. Check it for any issue.
 
 - `uninstaller.sh` - Uninstaller to remove every trace of ArloCloud-RPi.
 
-- `mp4_hashes.log` - (Optional) Logging file containing hashes of the videos, useful for telegram-sync.py.
-
-- `telegram-sync.py` - (Optional) File service for synchronizing clips from the USB storage to a Telegram Bot.
-
 ### Dependencies
 The scripts require the following packages:<br />
-`git` - `bash` - `findutils` - `util-linux` - `rsync` - `grep` - `coreutils` - `procps` - `kmod`
+`git` - `findutils` - `rsync`
 
-The optional Telegram Sync script require the following packages:<br />
-`python3` - `python-telegram-bot`
-
-The Arlo-Usb-Start.sh script will automatically check these dependencies.<br />If they are not already installed the program will exit resulting in an error in LogFile.
+The `arlo_usb_installer.sh` script will automatically check these dependencies.<br />
+If they are not already installed the program will exit resulting in an error in LogFile.
 
 ## License
 This project is licensed under the MIT License.

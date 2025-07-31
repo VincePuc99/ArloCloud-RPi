@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 #################################################################### Check if sync_clips process already exist
 
 for pid in $(pidof -x sync_clips.sh); do
@@ -10,8 +12,6 @@ for pid in $(pidof -x sync_clips.sh); do
 done
 
 #################################################################### Offset calculation
-
-ARLO_IMG_FILE=/arlo.bin
 
 function first_partition_offset () {
   local filename="$1"
@@ -30,18 +30,22 @@ function first_partition_offset () {
 
 #################################################################### Mount/Sync Section
 
-umount /mnt/arlo || true 
+ARLO_IMG_FILE="/arlo.bin" 
+ARLO_IMG_MOUNT_POINT="$SCRIPT_DIR/arlo/" 
+ARLO_EXPOSED_MOUNT_POINT="$SCRIPT_DIR/ArloExposed" 
+
+umount "$ARLO_IMG_MOUNT_POINT" || true 
 
 partition_offset=$(first_partition_offset "$ARLO_IMG_FILE")
 
 loopdev=$(losetup -o "$partition_offset" -f --show "$ARLO_IMG_FILE")
 
-mount "$loopdev" /mnt/arlo
+mount "$loopdev" "$ARLO_IMG_MOUNT_POINT"
 
-mkdir -p /mnt/ArloExposed   # Create the directory if it doesn't exist
+mkdir -p "$ARLO_EXPOSED_MOUNT_POINT"   # Create the directory if it doesn't exist
 
-rsync -avu --delete --inplace "/mnt/arlo/" "/mnt/ArloExposed"
+rsync -avu --delete --inplace "$ARLO_IMG_MOUNT_POINT" "$ARLO_EXPOSED_MOUNT_POINT"
 
-umount /mnt/arlo || true
+umount "$ARLO_IMG_MOUNT_POINT" || true
 
 losetup -d "$loopdev"

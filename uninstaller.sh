@@ -1,28 +1,9 @@
 #!/bin/bash
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 echo "#############################################"
 echo "#### ArloCloud-RPi All-in-one uninstaller ###"
-echo "#############################################"
-echo
-
-echo "Checking if the telegram-sync.service exists..."
-if systemctl list-units --full --all | grep -q "telegram-sync.service"; then
-    echo "Systemd service found. Proceeding to disable and remove..."
-
-    if sudo systemctl stop telegram-sync.service && \
-       sudo systemctl disable telegram-sync.service && \
-       sudo rm -f /etc/systemd/system/telegram-sync.service && \
-       sudo systemctl daemon-reload; then
-        echo "Systemd service removed successfully."
-    else
-        echo "Failed to remove systemd service."
-        exit 1
-    fi
-else
-    echo "Systemd service not found. Skipping removal..."
-fi
-
-echo
 echo "#############################################"
 echo
 
@@ -40,6 +21,8 @@ else
     echo "'dwc2' not found in /etc/modules. Skipping removal."
 fi
 
+echo
+
 if grep -q "dtoverlay=dwc2" /boot/config.txt; then
     echo "'dtoverlay=dwc2' found in /boot/config.txt. Proceeding to remove..."
     if sudo sed -i '/dtoverlay=dwc2/d' /boot/config.txt; then
@@ -56,13 +39,17 @@ echo
 echo "#############################################"
 echo
 
+ARLO_IMG_FILE="/arlo.bin" 
+ARLO_IMG_MOUNT_POINT="$SCRIPT_DIR/arlo" 
+ARLO_EXPOSED_MOUNT_POINT="$SCRIPT_DIR/ArloExposed" 
+
 echo "Removing ARLO image file and mount folders..."
 
-if mountpoint -q /mnt/arlo; then
-    sudo umount /mnt/arlo || { echo "Failed to unmount /mnt/arlo"; exit 1; }
+if mountpoint -q "$ARLO_IMG_MOUNT_POINT"; then
+    sudo umount "$ARLO_IMG_MOUNT_POINT" || { echo "Failed to unmount $ARLO_IMG_MOUNT_POINT"; exit 1; }
 fi
 
-if sudo rm -rf /mnt/arlo && rm -f /arlo.bin && sudo rm -rf /mnt/ArloExposed; then
+if sudo rm -rf "$ARLO_IMG_MOUNT_POINT" && rm -f "$ARLO_IMG_FILE" && sudo rm -rf "$ARLO_EXPOSED_MOUNT_POINT"; then
     echo "ARLO image and folders removed successfully."
 else
     echo "Failed to remove ARLO image or mount folders."
@@ -75,10 +62,9 @@ echo
 
 echo "Checking if cron jobs exist..."
 
-if crontab -l | grep -vE "@reboot sudo sh $(pwd)/enable_mass_storage.sh [0-9]+" | crontab - && \
-   crontab -l | grep -vE "\\*/1 \\* \\* \\* \\* sudo /bin/bash $(pwd)/sync_clips.sh" | crontab - && \
-   crontab -l | grep -vE "0 0 \\* \\* \\* sudo /bin/bash $(pwd)/cleanup_clips.sh" | crontab - ; then
-    echo "All cron jobs found and removed."
+if crontab -l | grep -vE "@reboot sudo sh $SCRIPT_DIR/enable_mass_storage.sh [0-9]+" | crontab - && \
+   crontab -l | grep -vE "\\*/1 \\* \\* \\* \\* sudo /bin/bash $SCRIPT_DIR/sync_clips.sh" | crontab - ; then
+   echo "All cron jobs found and removed."
 else
     echo "One or more cron jobs not found. Skipping removal."
     exit 1
@@ -90,9 +76,9 @@ echo
 
 echo "Removing all ArloCloud-RPi related files (including this uninstaller)..."
 
-if [ $(basename "$(pwd)") == "ArloCloud-RPi" ]; then
+if [ $(basename "$SCRIPT_DIR") == "ArloCloud-RPi" ]; then
     
-    if rm -rf $(pwd); then
+    if rm -rf $SCRIPT_DIR; then
         echo "All config files removed successfully."
     else
         echo "Failed to remove config files."
