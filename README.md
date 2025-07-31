@@ -108,9 +108,9 @@ Backup your data before proceeding!
 
 - `sync_clips.sh` - Synchronizes clips from the USB storage to a shared directory. Ensures that the mount point is properly managed to avoid data corruption.
 
-- `arlo_usb_installer.log` - Will be created on first run inside ArloCloud-RPi Main folder. Check it for any issue.
+- `arlo_usb_installer.log` - Will be created on first run inside `ArloCloud-RPi` Main folder. Check it for any issue.
 
-- `uninstaller.sh` - Uninstaller to remove every trace of ArloCloud-RPi.
+- `uninstaller.sh` - Uninstaller to remove every trace of `ArloCloud-RPi`.
 
 ### Dependencies
 The scripts require the following packages:<br />
