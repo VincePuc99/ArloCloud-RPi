@@ -30,7 +30,7 @@ function first_partition_offset () {
 
 #################################################################### Mount/Sync Section
 
-ARLO_IMG_FILE="$SCRIPT_DIR/arlo.bin" 
+ARLO_IMG_FILE="/arlo.bin" 
 ARLO_IMG_MOUNT_POINT="$SCRIPT_DIR/arlo" 
 ARLO_EXPOSED_MOUNT_POINT="$SCRIPT_DIR/ArloExposed" 
 
