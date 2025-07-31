@@ -116,7 +116,7 @@ Backup your data before proceeding!
 The scripts require the following packages:<br />
 `git` - `findutils` - `rsync`
 
-The Arlo-Usb-Start.sh script will automatically check these dependencies.<br />
+The `Arlo-Usb-Start.sh` script will automatically check these dependencies.<br />
 If they are not already installed the program will exit resulting in an error in LogFile.
 
 ## License
