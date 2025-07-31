@@ -14,12 +14,12 @@ Then you can share all your footage with your preferred method, Google Drive, Sa
 
 If you just want an Arlo’s cloud storage DIY alternative then ArloCloud-RPi is for you! <br />
 
-The scripts handle tasks such as enabling mass storage (30GB), synchronizing clips and cleaning up old clips. <br />
-All clips are stored in `./ArloExposed` (inside the cloned ArloCloud-RPi).<br />
-You need to access to this folder to expose them on your preferred service.
+The script enables a virtual USB storage of 30GB and sets up a crontab to synchronize clips between<br /> the virtual USB and an exposed folder (`./ArloExposed` inside the cloned `/ArloCloud-RPi`).<br />
+You need to access this folder to view your clips on your preferred service.
 
 #### ⚠️ WARNING ⚠️
-Two folders will be created in `/ArloCloud-RPi` - `./arlo` and `./ArloExposed`.<br />To avoid data corruption, DO NOT ALTER the `./arlo` one. It's a mount point for `sync_clips.sh`.<br />
+Two directories will be created in `/ArloCloud-RPi` - `./arlo` and `./ArloExposed`.<br />
+To avoid data corruption, DO NOT ALTER the `./arlo` one. It's a mount point for `sync_clips.sh`.<br />
 
 Any other OS's / Distros are untested mainly due to `/boot/config.txt` position.
 
@@ -88,14 +88,14 @@ To completely uninstall ArloCloud-RPi, run the following command:
 ```
 sudo ./uninstaller.sh
 ```
-This command will remove the USB image file, all mount points located inside ArloCloud-RPi main folder, <br />
+This command will remove the USB image file, all mount points located inside `/ArloCloud-RPi` main folder, <br />
 all files cloned with `git clone`, all crontab-related tasks and `dwc2` from `/etc/modules`-`/boot/config.txt`.<br />
 
 Once the uninstaller has finished, the system will reboot.<br />
 Afterward, check the connection to the base in Arlo Secure App. It should look like the image below.
 
 #### ⚠️ WARNING ⚠️
-All saved clip in the ArloCloud-RPi mount points (like `./arlo` and `./ArloExposed`) will be removed.<br />
+All saved clip in the `/ArloCloud-RPi` mount points (like `./arlo` and `./ArloExposed`) will be removed.<br />
 Backup your data before proceeding!
 
 <img height="200" src="https://github.com/user-attachments/assets/bd331990-24a9-488d-82bf-dba40d6eb6c5" />
@@ -103,8 +103,6 @@ Backup your data before proceeding!
 ## Documentation
 
 - `Arlo-Usb-Start.sh` - This script installs necessary dependencies and runs the other scripts in the correct order. It ensures that the system is properly set up for USB mass storage and clip management.
-
-- `cleanup_clips.sh` - Cleans up old clips from the storage directory. By default, it removes clips older than 14 days.
 
 - `enable_mass_storage.sh` - Enables USB mass storage with the specified maximum power.
 
