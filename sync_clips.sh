@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 #################################################################### Check if sync_clips process already exist
 
 for pid in $(pidof -x sync_clips.sh); do
@@ -28,9 +30,9 @@ function first_partition_offset () {
 
 #################################################################### Mount/Sync Section
 
-ARLO_IMG_FILE="$(pwd)/arlo.bin" 
-ARLO_IMG_MOUNT_POINT="$(pwd)/arlo" 
-ARLO_EXPOSED_MOUNT_POINT="$(dirname "$0")/ArloExposed" 
+ARLO_IMG_FILE="$SCRIPT_DIR/arlo.bin" 
+ARLO_IMG_MOUNT_POINT="$SCRIPT_DIR/arlo" 
+ARLO_EXPOSED_MOUNT_POINT="$SCRIPT_DIR/ArloExposed" 
 
 umount "$ARLO_IMG_MOUNT_POINT" || true 
 
