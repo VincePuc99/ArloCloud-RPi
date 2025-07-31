@@ -62,7 +62,7 @@ sudo chmod +x *
 ## Usage
 
 ```sh
-sudo ./Arlo-Usb-Start.sh <max_power>
+sudo ./arlo_usb_installer.sh <max_power>
 ```
 Where <max_power> is:
 
@@ -72,10 +72,10 @@ Where <max_power> is:
 
 Example for Raspberry Pi 4B:
 ```
-sudo ./Arlo-Usb-Start.sh 500
+sudo ./arlo_usb_installer.sh 500
 ```
 
-After running `Arlo-Usb-Start.sh`, the Raspberry Pi will reboot.<br />
+After running `arlo_usb_installer.sh`, the Raspberry Pi will reboot.<br />
 
 Upon reboot, check the connection to the base in Arlo Secure App™. It should look like the image below.
 
@@ -102,13 +102,13 @@ Backup your data before proceeding!
 
 ## Documentation
 
-- `Arlo-Usb-Start.sh` - This script installs necessary dependencies and runs the other scripts in the correct order. It ensures that the system is properly set up for USB mass storage and clip management.
+- `arlo_usb_installer.sh` - This script installs necessary dependencies and runs the other scripts in the correct order. It ensures that the system is properly set up for USB mass storage and clip management.
 
 - `enable_mass_storage.sh` - Enables USB mass storage with the specified maximum power.
 
 - `sync_clips.sh` - Synchronizes clips from the USB storage to a shared directory. Ensures that the mount point is properly managed to avoid data corruption.
 
-- `arlo_usb_start.log` - Will be created on first run inside ArloCloud-RPi Main folder. Check it for any issue.
+- `arlo_usb_installer.log` - Will be created on first run inside ArloCloud-RPi Main folder. Check it for any issue.
 
 - `uninstaller.sh` - Uninstaller to remove every trace of ArloCloud-RPi.
 
@@ -116,7 +116,7 @@ Backup your data before proceeding!
 The scripts require the following packages:<br />
 `git` - `findutils` - `rsync`
 
-The `Arlo-Usb-Start.sh` script will automatically check these dependencies.<br />
+The `arlo_usb_installer.sh` script will automatically check these dependencies.<br />
 If they are not already installed the program will exit resulting in an error in LogFile.
 
 ## License
