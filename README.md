@@ -95,7 +95,7 @@ Once the uninstaller has finished, the system will reboot.<br />
 Afterward, check the connection to the base in Arlo Secure App. It should look like the image below.
 
 #### ⚠️ WARNING ⚠️
-Doing so will remove all clips saved in the ArloCloud-RPi mount points (like `./arlo` and `./ArloExposed`).<br />
+All saved clip in the ArloCloud-RPi mount points (like `./arlo` and `./ArloExposed`) will be removed.<br />
 Backup your data before proceeding!
 
 <img height="200" src="https://github.com/user-attachments/assets/bd331990-24a9-488d-82bf-dba40d6eb6c5" />
