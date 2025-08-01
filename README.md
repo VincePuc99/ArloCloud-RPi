@@ -1,3 +1,7 @@
+<p align="center">
+<img align="center" height="200" src="https://github.com/user-attachments/assets/5ec431a6-60b9-4f2e-b06e-44166ed7320d" />
+</p>
+
 # Arlo Self Hosted Cloud-RPi Setup
 
 ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white)
