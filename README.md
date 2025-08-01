@@ -47,7 +47,7 @@ Tested on:
 
 - Dependencies
   - The scripts require the following packages: `git` - `findutils` - `rsync` <br />
-  If they are not already installed the program will exit resulting in an error in `arlo_usb_installer.log`.
+  If they are not already installed the program will exit resulting in an error in `arlo_usb_installer.log`
  
 ## Installation
 
