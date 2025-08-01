@@ -45,6 +45,13 @@ Tested on:
 - For others RPi's:
   - Connect the USB cable to any USB port of the RPi, you will need an external power source.
  
+### Dependencies
+The scripts require the following packages:<br />
+`git` - `findutils` - `rsync`
+
+The `arlo_usb_installer.sh` script will automatically check these dependencies.<br />
+If they are not already installed the program will exit resulting in an error in `arlo_usb_installer.log`.
+ 
 ## Installation
 
 ### Cloning the Repository
@@ -115,13 +122,6 @@ Backup your data before proceeding!
 - `arlo_usb_installer.log` - Will be created on first run inside `ArloCloud-RPi` Main folder. Check it for any issue.
 
 - `uninstaller.sh` - Uninstaller to remove every trace of `ArloCloud-RPi`.
-
-### Dependencies
-The scripts require the following packages:<br />
-`git` - `findutils` - `rsync`
-
-The `arlo_usb_installer.sh` script will automatically check these dependencies.<br />
-If they are not already installed the program will exit resulting in an error in LogFile.
 
 ## License
 This project is licensed under the MIT License.
