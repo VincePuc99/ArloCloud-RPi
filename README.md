@@ -84,8 +84,8 @@ sudo ./arlo_usb_installer.sh 500
 ```
 
 After running `arlo_usb_installer.sh`, the Raspberry Pi will reboot.<br />
+Afterward, check the connection to the base in <img height="16" src="https://github.com/user-attachments/assets/37a46033-f863-47f9-89e4-8d67363b8312" /> Arlo Secure App™. It should look like the image below.
 
-Upon reboot, check the connection to the base in Arlo Secure App™. It should look like the image below.
 
 <img height="200" src="https://github.com/user-attachments/assets/d2842741-3aa3-4ed1-bdf5-b9e80154231c" />
 
@@ -99,8 +99,8 @@ sudo ./uninstaller.sh
 This command will remove the USB image file, all mount points located inside `/ArloCloud-RPi` main folder, <br />
 all files cloned with `git clone`, all crontab-related tasks and `dwc2` from `/etc/modules`-`/boot/config.txt`.<br />
 
-Once the uninstaller has finished, the system will reboot.<br />
-Afterward, check the connection to the base in Arlo Secure App™. It should look like the image below.
+After running `uninstaller.sh`, the Raspberry Pi will reboot.<br />
+Afterward, check the connection to the base in <img height="16" src="https://github.com/user-attachments/assets/37a46033-f863-47f9-89e4-8d67363b8312" /> Arlo Secure App™. It should look like the image below.
 
 #### ⚠️ WARNING ⚠️
 All saved clips in the `/ArloCloud-RPi` folders (like `./arlo` and `./ArloExposed`) will be removed.<br />
@@ -122,3 +122,4 @@ Backup your data before proceeding!
 
 ## License
 This project is licensed under the MIT License.
+
