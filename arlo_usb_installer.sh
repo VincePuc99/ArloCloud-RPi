@@ -81,10 +81,10 @@ fi
 
 # Append dtoverlay if not already present
 if ! grep -q "dtoverlay=dwc2" "$BOOT_CONFIG"; then
-    echo "dtoverlay=dwc2" | sudo tee -a "$BOOT_CONFIG" > /dev/null
-    log "dtoverlay added to $BOOT_CONFIG"
-else
-    log "dtoverlay already present in $BOOT_CONFIG"
+    echo "dtoverlay=dwc2" | sudo tee -a "$BOOT_CONFIG" > /dev/null || {
+        log "Failed to add dtoverlay to $BOOT_CONFIG - 5/7"
+        exit 1
+    }
 fi
 
 log "DWC2 SUCCESS - 5/7"
