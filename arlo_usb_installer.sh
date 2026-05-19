@@ -79,10 +79,10 @@ else
 fi
 
 # Append "dtoverlay=dwc2" to /boot/config.txt
-if sudo sh -c 'echo "dtoverlay=dwc2" >> /boot/config.txt'; then
-    echo "Successfully appended 'dtoverlay=dwc2' to /boot/config.txt" >> "$LOG_FILE"
+if sudo sh -c 'echo "dtoverlay=dwc2" >> /boot/firmware/config.txt'; then
+    echo "Successfully appended 'dtoverlay=dwc2' to /boot/firmware/config.txt" >> "$LOG_FILE"
 else
-    echo "dtoverlay=dwc2 to /boot/config.txt ERROR - 5/7">> "$LOG_FILE"
+    echo "dtoverlay=dwc2 to /boot/firmware/config.txt ERROR - 5/7">> "$LOG_FILE"
     exit 1
 fi
 
