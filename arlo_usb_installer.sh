@@ -147,7 +147,7 @@ sync_clip_interval="*/1 * * * * sudo /bin/bash $SCRIPT_DIR/sync_clips.sh"
 ( crontab -l 2>/dev/null | cat;  echo "$sync_clip_interval" ) | crontab - \
     || { log "Failed to add sync_clip_interval to crontab, 7/7 ERROR"; exit 1; }
 
-log "Cronjob SUCCESS - 7/7" >> "$LOG_FILE"
+log "Cronjob SUCCESS - 7/7"
 
 #################################################################
 
