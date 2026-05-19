@@ -42,7 +42,7 @@ echo "FREE_SPACE SUCCESS - 3/7" >> "$LOG_FILE"
 ################################################################# Dependencies
 
 is_installed() {
-    dpkg -s "$1" &> /dev/null
+    dpkg -s "$1" &>/dev/null
 }
 
 is_active() {
@@ -50,22 +50,23 @@ is_active() {
 }
 
 dependencies=(findutils rsync dbus)
+services=(dbus systemd-logind)
 
 for package in "${dependencies[@]}"; do
     if ! is_installed "$package"; then
-        echo "Dependencies ERROR: $package - 4/7">> "$LOG_FILE"
+        echo "Dependencies ERROR: $package - 4/7" >> "$LOG_FILE"
         exit 1
     fi
 done
 
-for svc in dbus systemd-logind; do
+for svc in "${services[@]}"; do
     if ! is_active "$svc"; then
         echo "Dependencies-Runtime ERROR: $svc not active - 4/7" >> "$LOG_FILE"
         exit 1
     fi
 done
 
-echo "Dependencies SUCCESS - 4/7">> "$LOG_FILE"
+echo "Dependencies SUCCESS - 4/7" >> "$LOG_FILE"
 
 ################################################################# DWC2
 
