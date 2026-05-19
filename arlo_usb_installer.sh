@@ -49,23 +49,11 @@ is_installed() {
     dpkg -s "$1" &>/dev/null
 }
 
-is_active() {
-    systemctl is-active --quiet "$1"
-}
-
 dependencies=(findutils rsync dbus)
-services=(dbus systemd-logind)
 
 for package in "${dependencies[@]}"; do
     if ! is_installed "$package"; then
         log "Dependencies ERROR: $package - 4/7"
-        exit 1
-    fi
-done
-
-for svc in "${services[@]}"; do
-    if ! is_active "$svc"; then
-        log "Dependencies-Runtime ERROR: $svc not active - 4/7"
         exit 1
     fi
 done
