@@ -54,6 +54,13 @@ for package in "${dependencies[@]}"; do
     fi
 done
 
+for svc in dbus systemd-logind; do
+    if ! is_active "$svc"; then
+        echo "Dependencies-Runtime ERROR: $svc not active - 4/7" >> "$LOG_FILE"
+        exit 1
+    fi
+done
+
 echo "Dependencies SUCCESS - 4/7">> "$LOG_FILE"
 
 ################################################################# DWC2
