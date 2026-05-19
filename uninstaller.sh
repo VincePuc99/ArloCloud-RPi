@@ -122,4 +122,4 @@ echo
 
 echo "All tasks completed successfully. Rebooting..."
 
-sudo reboot
+sudo reboot now
