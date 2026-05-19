@@ -25,7 +25,7 @@ You need to access this folder in order to view your clips on your preferred ser
 Two directories will be created in `/ArloCloud-RPi` - `./arlo` and `./ArloExposed`.<br />
 To avoid data corruption, DO NOT ALTER the `./arlo` one. It's a mount point for `sync_clips.sh`.<br />
 
-Any other OS's / Distros are untested mainly due to `/boot/config.txt` position.
+Any other OS's / Distros are untested mainly due to `/boot/firmware/config.txt` location.
 
 Tested on:
 - Lexar 128GB SD Card
