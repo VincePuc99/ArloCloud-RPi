@@ -70,20 +70,29 @@ echo "Dependencies SUCCESS - 4/7" >> "$LOG_FILE"
 
 ################################################################# DWC2
 
-# Append "dwc2" to /etc/modules
-if sudo sh -c 'echo "dwc2" >> /etc/modules'; then
-    echo "Successfully appended 'dwc2' to /etc/modules" >> "$LOG_FILE"
+BOOT_CONFIG=""
+
+# Detect correct boot config file
+if [ -f /boot/firmware/config.txt ]; then
+    BOOT_CONFIG="/boot/firmware/config.txt"
+elif [ -f /boot/config.txt ]; then
+    BOOT_CONFIG="/boot/config.txt"
 else
-    echo "dwc2 to /etc/modules ERROR - 5/7">> "$LOG_FILE"
+    echo "BOOT CONFIG NOT FOUND - 5/7" >> "$LOG_FILE"
     exit 1
 fi
 
-# Append "dtoverlay=dwc2" to /boot/config.txt
-if sudo sh -c 'echo "dtoverlay=dwc2" >> /boot/firmware/config.txt'; then
-    echo "Successfully appended 'dtoverlay=dwc2' to /boot/firmware/config.txt" >> "$LOG_FILE"
+# Append dwc2 to /etc/modules if not already present
+if ! grep -q "^dwc2$" /etc/modules 2>/dev/null; then
+    echo "dwc2" | sudo tee -a /etc/modules > /dev/null
+fi
+
+# Append dtoverlay if not already present
+if ! grep -q "dtoverlay=dwc2" "$BOOT_CONFIG"; then
+    echo "dtoverlay=dwc2" | sudo tee -a "$BOOT_CONFIG" > /dev/null
+    echo "dtoverlay added to $BOOT_CONFIG" >> "$LOG_FILE"
 else
-    echo "dtoverlay=dwc2 to /boot/firmware/config.txt ERROR - 5/7">> "$LOG_FILE"
-    exit 1
+    echo "dtoverlay already present in $BOOT_CONFIG" >> "$LOG_FILE"
 fi
 
 echo "DWC2 SUCCESS - 5/7" >> "$LOG_FILE"
