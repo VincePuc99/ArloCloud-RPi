@@ -38,16 +38,28 @@ fi
 
 echo
 
-if grep -q "dtoverlay=dwc2" /boot/config.txt; then
-    log "'dtoverlay=dwc2' found in /boot/config.txt. Proceeding to remove..."
-    if sudo sed -i '/dtoverlay=dwc2/d' /boot/config.txt; then
-        log "'dtoverlay=dwc2' removed from /boot/config.txt successfully."
+BOOT_CONFIG=""
+
+echo "Getting config.txt location..."
+if [ -f /boot/firmware/config.txt ]; then
+    BOOT_CONFIG="/boot/firmware/config.txt"
+elif [ -f /boot/config.txt ]; then
+    BOOT_CONFIG="/boot/config.txt"
+else
+    log "BOOT CONFIG NOT FOUND - 5/7"
+    exit 1
+fi
+
+if grep -q "dtoverlay=dwc2" "$BOOT_CONFIG"; then
+    log "'dtoverlay=dwc2' found in $BOOT_CONFIG. Proceeding to remove..."
+    if sudo sed -i '/dtoverlay=dwc2/d' "$BOOT_CONFIG"; then
+        log "'dtoverlay=dwc2' removed from $BOOT_CONFIG successfully."
     else
-        log "Failed to remove 'dtoverlay=dwc2' from /boot/config.txt."
+        log "Failed to remove 'dtoverlay=dwc2' from $BOOT_CONFIG."
         exit 1
     fi
 else
-    log "'dtoverlay=dwc2' not found in /boot/config.txt. Skipping removal."
+    log "'dtoverlay=dwc2' not found in $BOOT_CONFIG. Skipping removal."
 fi
 
 echo
