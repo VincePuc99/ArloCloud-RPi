@@ -95,4 +95,4 @@ echo
 
 echo "All tasks completed successfully. Rebooting..."
 
-sudo reboot now
+sudo reboot
