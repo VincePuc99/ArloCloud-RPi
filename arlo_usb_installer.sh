@@ -6,24 +6,28 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 LOG_FILE="$SCRIPT_DIR/arlo_usb_installer.log"
 
+log() {
+    echo "$1" | tee -a "$LOG_FILE"
+}
+
 if [ -f "$LOG_FILE" ]; then
     > "$LOG_FILE"
 else
     touch "$LOG_FILE"
 fi
 
-echo "LogFile SUCCESS - 1/7" >> "$LOG_FILE"
+log "LogFile SUCCESS - 1/7"
 
 ################################################################# MAX_POWER Control
 
 if [ -z "$1" ] || ! [[ "$1" =~ ^[0-9]+$ ]] || [ "$1" -lt 100 ] || [ "$1" -gt 900 ]; then
-    echo "Usage: $0 <max_power>"
-    echo "Invalid max_power value. It must be a number between 100 and 900."
-    echo "MAXPOWER ERROR - 2/7" >> "$LOG_FILE"
+    log "Usage: $0 <max_power>"
+    log "Invalid max_power value. It must be a number between 100 and 900."
+    log "MAXPOWER ERROR - 2/7"
     exit 1
 fi
 
-echo "MaxPower SUCCESS - 2/7" >> "$LOG_FILE"
+log "MaxPower SUCCESS - 2/7"
 
 MAX_POWER=$1
 
@@ -32,12 +36,12 @@ MAX_POWER=$1
 FREE_SPACE_KB=$(df / | tail -1 | awk '{print $4}')
 
 if [ "$FREE_SPACE_KB" -lt $((35 * 1024 * 1024)) ]; then
-    echo "Error: Less than 35 GB available."
-    echo "FREE_SPACE ERROR - 3/7" >> "$LOG_FILE"
+    log "Error: Less than 35 GB available."
+    log "FREE_SPACE ERROR - 3/7"
     exit 1
 fi
 
-echo "FREE_SPACE SUCCESS - 3/7" >> "$LOG_FILE"
+log "FREE_SPACE SUCCESS - 3/7"
 
 ################################################################# Dependencies
 
@@ -54,19 +58,19 @@ services=(dbus systemd-logind)
 
 for package in "${dependencies[@]}"; do
     if ! is_installed "$package"; then
-        echo "Dependencies ERROR: $package - 4/7" >> "$LOG_FILE"
+        log "Dependencies ERROR: $package - 4/7"
         exit 1
     fi
 done
 
 for svc in "${services[@]}"; do
     if ! is_active "$svc"; then
-        echo "Dependencies-Runtime ERROR: $svc not active - 4/7" >> "$LOG_FILE"
+        log "Dependencies-Runtime ERROR: $svc not active - 4/7"
         exit 1
     fi
 done
 
-echo "Dependencies SUCCESS - 4/7" >> "$LOG_FILE"
+log "Dependencies SUCCESS - 4/7"
 
 ################################################################# DWC2
 
@@ -78,24 +82,24 @@ if [ -f /boot/firmware/config.txt ]; then
 elif [ -f /boot/config.txt ]; then
     BOOT_CONFIG="/boot/config.txt"
 else
-    echo "BOOT CONFIG NOT FOUND - 5/7" >> "$LOG_FILE"
+    log "BOOT CONFIG NOT FOUND - 5/7"
     exit 1
 fi
 
 # Append dwc2 to /etc/modules if not already present
 if ! grep -q "^dwc2$" /etc/modules 2>/dev/null; then
-    echo "dwc2" | sudo tee -a /etc/modules > /dev/null
+    log "dwc2" | sudo tee -a /etc/modules > /dev/null
 fi
 
 # Append dtoverlay if not already present
 if ! grep -q "dtoverlay=dwc2" "$BOOT_CONFIG"; then
-    echo "dtoverlay=dwc2" | sudo tee -a "$BOOT_CONFIG" > /dev/null
-    echo "dtoverlay added to $BOOT_CONFIG" >> "$LOG_FILE"
+    log "dtoverlay=dwc2" | sudo tee -a "$BOOT_CONFIG" > /dev/null
+    log "dtoverlay added to $BOOT_CONFIG"
 else
-    echo "dtoverlay already present in $BOOT_CONFIG" >> "$LOG_FILE"
+    log "dtoverlay already present in $BOOT_CONFIG"
 fi
 
-echo "DWC2 SUCCESS - 5/7" >> "$LOG_FILE"
+log "DWC2 SUCCESS - 5/7"
 
 ################################################################# Storage
 
@@ -142,7 +146,7 @@ function add_drive () {
 
 add_drive "arlo" "ARLO" "$ARLO_IMG_SIZE" "$ARLO_IMG_FILE" 
 
-echo "Storage IMG SUCCESS - 6/7" >> "$LOG_FILE"
+log "Storage IMG SUCCESS - 6/7"
 
 ################################################################# Cronjob
 
@@ -150,12 +154,12 @@ init_mass_storage="@reboot sudo sh $SCRIPT_DIR/enable_mass_storage.sh $MAX_POWER
 sync_clip_interval="*/1 * * * * sudo /bin/bash $SCRIPT_DIR/sync_clips.sh"
 
 ( crontab -l 2>/dev/null | cat;  echo "$init_mass_storage" ) | crontab - \
-    || { echo "Failed to add init_mass_storage to crontab, 7/7 ERROR" >> "$LOG_FILE"; exit 1; }
+    || { log "Failed to add init_mass_storage to crontab, 7/7 ERROR"; exit 1; }
 
 ( crontab -l 2>/dev/null | cat;  echo "$sync_clip_interval" ) | crontab - \
-    || { echo "Failed to add sync_clip_interval to crontab, 7/7 ERROR" >> "$LOG_FILE"; exit 1; }
+    || { log "Failed to add sync_clip_interval to crontab, 7/7 ERROR"; exit 1; }
 
-echo "Cronjob SUCCESS - 7/7" >> "$LOG_FILE"
+log "Cronjob SUCCESS - 7/7" >> "$LOG_FILE"
 
 #################################################################
 
