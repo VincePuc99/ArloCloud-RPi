@@ -151,4 +151,4 @@ echo "Cronjob SUCCESS - 7/7" >> "$LOG_FILE"
 #################################################################
 
 echo "Script finished, rebooting. Check log file for further informations."
-sudo reboot now
+sudo reboot
