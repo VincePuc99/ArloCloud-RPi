@@ -76,12 +76,12 @@ fi
 
 # Append dwc2 to /etc/modules if not already present
 if ! grep -q "^dwc2$" /etc/modules 2>/dev/null; then
-    log "dwc2" | sudo tee -a /etc/modules > /dev/null
+    echo "dwc2" | sudo tee -a /etc/modules > /dev/null
 fi
 
 # Append dtoverlay if not already present
 if ! grep -q "dtoverlay=dwc2" "$BOOT_CONFIG"; then
-    log "dtoverlay=dwc2" | sudo tee -a "$BOOT_CONFIG" > /dev/null
+    echo "dtoverlay=dwc2" | sudo tee -a "$BOOT_CONFIG" > /dev/null
     log "dtoverlay added to $BOOT_CONFIG"
 else
     log "dtoverlay already present in $BOOT_CONFIG"
