@@ -42,10 +42,10 @@ echo "FREE_SPACE SUCCESS - 3/7" >> "$LOG_FILE"
 ################################################################# Dependencies
 
 is_installed() {
-    dpkg -l "$1" &> /dev/null
+    dpkg -s "$1" &> /dev/null
 }
 
-dependencies=(findutils rsync)
+dependencies=(findutils rsync dbus)
 
 for package in "${dependencies[@]}"; do
     if ! is_installed "$package"; then
