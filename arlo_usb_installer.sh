@@ -45,6 +45,10 @@ is_installed() {
     dpkg -s "$1" &> /dev/null
 }
 
+is_active() {
+    systemctl is-active --quiet "$1"
+}
+
 dependencies=(findutils rsync dbus)
 
 for package in "${dependencies[@]}"; do
