@@ -94,7 +94,7 @@ log "Removing all ArloCloud-RPi related files (including this uninstaller)..."
 if [ $(basename "$SCRIPT_DIR") == "ArloCloud-RPi" ]; then
     
     if rm -rf $SCRIPT_DIR; then
-        log "All config files removed successfully."
+        echo "All config files removed successfully."
     else
         log "Failed to remove config files."
         exit 1
@@ -108,6 +108,6 @@ echo
 echo "#############################################"
 echo
 
-log "All tasks completed successfully. Rebooting..."
+echo "All tasks completed successfully. Rebooting..."
 
 sudo reboot
