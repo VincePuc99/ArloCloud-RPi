@@ -49,7 +49,7 @@ is_installed() {
     dpkg -s "$1" &>/dev/null
 }
 
-dependencies=(findutils rsync dbus)
+dependencies=(findutils rsync)
 
 for package in "${dependencies[@]}"; do
     if ! is_installed "$package"; then
