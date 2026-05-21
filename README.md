@@ -97,8 +97,7 @@ To completely uninstall `ArloCloud-RPi`, run the following command:
 ```
 sudo ./uninstaller.sh
 ```
-This command will remove the USB image file, all mount points located inside `/ArloCloud-RPi` main folder, all files cloned with `git clone`,<br />
-all crontab-related tasks, `dwc2` from `/etc/modules` and `/boot/firmware/config.txt` (or `/boot/config.txt`) .<br />
+This command will remove the USB image file, all mount points located inside `/ArloCloud-RPi` main folder, all files cloned with `git clone`, all crontab-related tasks, `dwc2` from `/etc/modules` and `/boot/firmware/config.txt` (or `/boot/config.txt`) .<br />
 
 After running `uninstaller.sh`, the Raspberry Pi will reboot.<br />
 Afterward, check the connection to the base in <img height="16" src="https://github.com/user-attachments/assets/37a46033-f863-47f9-89e4-8d67363b8312" /> Arlo Secure App™. It should look like the image below.
