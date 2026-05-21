@@ -25,7 +25,8 @@ You need to access this folder in order to view your clips on your preferred ser
 Two directories will be created in `/ArloCloud-RPi` - `./arlo` and `./ArloExposed`.<br />
 To avoid data corruption, DO NOT ALTER the `./arlo` one. It's a mount point for `sync_clips.sh`.<br />
 
-Any other OS's / Distros are untested mainly due to `/boot/firmware/config.txt` location.
+Any other OS's / Distros are untested mainly due to `/boot/firmware/config.txt` location.<br />
+Note that `/boot/config.txt` is also checked, as it is used by older versions of DietPi.
 
 Tested on:
 - Lexar 128GB SD Card
@@ -96,8 +97,8 @@ To completely uninstall `ArloCloud-RPi`, run the following command:
 ```
 sudo ./uninstaller.sh
 ```
-This command will remove the USB image file, all mount points located inside `/ArloCloud-RPi` main folder, <br />
-all files cloned with `git clone`, all crontab-related tasks and `dwc2` from `/etc/modules`-`/boot/config.txt`.<br />
+This command will remove the USB image file, all mount points located inside `/ArloCloud-RPi` main folder, all files cloned with `git clone`,<br />
+all crontab-related tasks, `dwc2` from `/etc/modules` and `/boot/firmware/config.txt` (or `/boot/config.txt`) .<br />
 
 After running `uninstaller.sh`, the Raspberry Pi will reboot.<br />
 Afterward, check the connection to the base in <img height="16" src="https://github.com/user-attachments/assets/37a46033-f863-47f9-89e4-8d67363b8312" /> Arlo Secure App™. It should look like the image below.
