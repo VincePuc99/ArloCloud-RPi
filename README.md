@@ -21,12 +21,13 @@ If you just want an Arlo’s cloud storage DIY alternative then ArloCloud-RPi is
 The script enables a virtual USB storage of 30GB and sets up a crontab to synchronize clips between<br /> the virtual USB and an exposed folder (`./ArloExposed` inside the cloned `/ArloCloud-RPi`).<br />
 You need to access this folder in order to view your clips on your preferred service.
 
-#### ⚠️ WARNING ⚠️
-Two directories will be created in `/ArloCloud-RPi` - `./arlo` and `./ArloExposed`.<br />
-To avoid data corruption, DO NOT ALTER the `./arlo` one. It's a mount point for `sync_clips.sh`.<br />
+>[!CAUTION]
+>Two directories will be created in `/ArloCloud-RPi` - `./arlo` and `./ArloExposed`.<br />
+>To avoid data corruption, **DO NOT ALTER** the `./arlo` one. It's a mount point for `sync_clips.sh`.<br />
 
-Any other OS's / Distros are untested mainly due to `/boot/firmware/config.txt` location.<br />
-Note that `/boot/config.txt` is also checked, as it is used by older versions of DietPi.
+>[!WARNING]
+>Any other OS's / Distros are untested mainly due to `/boot/firmware/config.txt` location.<br />
+>Note that `/boot/config.txt` is also checked, as it is used by older versions of DietPi.
 
 Tested on:
 - Lexar 128GB SD Card
@@ -102,9 +103,9 @@ This command will remove the USB image file, all mount points located inside `/A
 After running `uninstaller.sh`, the Raspberry Pi will reboot.<br />
 Afterward, check the connection to the base in <img height="16" src="https://github.com/user-attachments/assets/37a46033-f863-47f9-89e4-8d67363b8312" /> Arlo Secure App™. It should look like the image below.
 
-#### ⚠️ WARNING ⚠️
-All saved clips in the `/ArloCloud-RPi` folders (like `./arlo` and `./ArloExposed`) will be removed.<br />
-Backup your data before proceeding!
+>[!CAUTION]
+>All saved clips in the `/ArloCloud-RPi` folders (like `./arlo` and `./ArloExposed`) will be removed.<br />
+>Backup your data before proceeding!
 
 <img height="200" src="https://github.com/user-attachments/assets/bd331990-24a9-488d-82bf-dba40d6eb6c5" />
 
